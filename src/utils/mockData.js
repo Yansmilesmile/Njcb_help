@@ -1,0 +1,116 @@
+// Mock data for the dashboard
+export const tabsData = {
+  loanBalance: {
+    name: "贷款余额",
+    key: "loanBalance",
+    current: 2222.31,
+    unit: "万",
+    changes: {
+      daily: 2.0,
+      monthly: 0,
+      yearly: -2220,
+    },
+    chartData: [
+      { date: "0829", value: 150 },
+      { date: "0830", value: 160 },
+      { date: "0831", value: 155 },
+      { date: "0901", value: 100 },
+      { date: "0902", value: 200 },
+      { date: "0903", value: 142.76 },
+      { date: "0904", value: 180 },
+    ],
+    tableData: [
+      { name: "上海分行", value: 6846, unit: "万" },
+      { name: "北京分行", value: 6846, unit: "万" },
+      { name: "杭州分行", value: 6846, unit: "万" },
+      { name: "湖州分行", value: 6846, unit: "万" },
+      { name: "嘉兴分行", value: 6846, unit: "万" },
+      { name: "机构名称比较长", value: 6846, unit: "万" },
+    ],
+  },
+  creditCustomers: {
+    name: "贷款授信客户",
+    key: "creditCustomers",
+    current: 1856.42,
+    unit: "户",
+    changes: {
+      daily: 15,
+      monthly: 5,
+      yearly: -120,
+    },
+    chartData: [
+      { date: "0829", value: 180 },
+      { date: "0830", value: 175 },
+      { date: "0831", value: 170 },
+      { date: "0901", value: 165 },
+      { date: "0902", value: 160 },
+      { date: "0903", value: 155 },
+      { date: "0904", value: 150 },
+    ],
+    tableData: [
+      { name: "上海分行", value: 1365, unit: "户" },
+      { name: "北京分行", value: 1365, unit: "户" },
+      { name: "杭州分行", value: 1365, unit: "户" },
+      { name: "湖州分行", value: 1365, unit: "户" },
+      { name: "嘉兴分行", value: 1365, unit: "户" },
+    ],
+  },
+  usageCustomers: {
+    name: "贷款用信客户",
+    key: "usageCustomers",
+    current: 1245.67,
+    unit: "户",
+    changes: {
+      daily: 8,
+      monthly: -3,
+      yearly: -85,
+    },
+    chartData: [
+      { date: "0829", value: 140 },
+      { date: "0830", value: 145 },
+      { date: "0831", value: 150 },
+      { date: "0901", value: 155 },
+      { date: "0902", value: 148 },
+      { date: "0903", value: 152 },
+      { date: "0904", value: 160 },
+    ],
+    tableData: [
+      { name: "上海分行", value: 1365, unit: "户" },
+      { name: "北京分行", value: 1365, unit: "户" },
+      { name: "杭州分行", value: 1365, unit: "户" },
+    ],
+  },
+  loanInvestment: {
+    name: "贷款投放",
+    key: "loanInvestment",
+    current: 3456.78,
+    unit: "万",
+    changes: {
+      daily: 25,
+      monthly: 120,
+      yearly: 580,
+    },
+    chartData: [
+      { date: "0829", value: 160, value2: 140 },
+      { date: "0830", value: 165, value2: 145 },
+      { date: "0831", value: 170, value2: 150 },
+      { date: "0901", value: 175, value2: 155 },
+      { date: "0902", value: 180, value2: 160 },
+      { date: "0903", value: 185, value2: 165 },
+      { date: "0904", value: 190, value2: 170 },
+    ],
+    tableData: [
+      { name: "上海分行", value: 3605, unit: "万" },
+      { name: "北京分行", value: 3605, unit: "万" },
+      { name: "杭州分行", value: 3605, unit: "万" },
+      { name: "湖州分行", value: 3605, unit: "万" },
+    ],
+  },
+};
+
+export const filterOptions = [
+  { text: "全部授信产品", value: "all" },
+  { text: "信贷类授信", value: "credit" },
+  { text: "贷款类授信", value: "loan" },
+  { text: "担保类授信", value: "guarantee" },
+];
