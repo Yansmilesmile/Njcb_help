@@ -192,13 +192,31 @@
             class="activity-item"
           >
             <div class="activity-header">
-              <van-tag :type="getActivityModeType(activity.activityMode)">
+              <div
+                :style="
+                  activity.activityMode === '沙龙'
+                    ? 'background-color: #FFF8EA; color: #FFC569; border-radius: 10px; padding: 2px 4px; display: inline-block;font-size: 12px;'
+                    : 'background-color: #FFEAEB; color: #FF236A; border-radius: 10px; padding: 2px 4px; display: inline-block;font-size: 12px;'
+                "
+              >
                 {{ activity.activityMode }}
-              </van-tag>
+              </div>
               <span class="activity-name">{{ activity.activityName }}</span>
-              <van-tag :type="getStatusType(activity.status)" plain>
+              <div
+                :style="{
+                  fontSize: '12px',
+                  color:
+                    activity.status === '未开始'
+                      ? '#FF235C'
+                      : activity.status === '进行中'
+                      ? '#3BB3F1'
+                      : activity.status === '已结束'
+                      ? '#1DAF29'
+                      : '#333',
+                }"
+              >
                 {{ activity.status }}
-              </van-tag>
+              </div>
             </div>
             <div class="activity-body">
               <div class="activity-info-row">

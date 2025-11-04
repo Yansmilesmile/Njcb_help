@@ -142,7 +142,6 @@ export default {
       showSortPopup: false,
       sortableTabs: [],
       sortableInstance: null,
-
     };
   },
   computed: {
@@ -388,5 +387,8 @@ export default {
 .drag-handle {
   font-size: 18px;
   color: #969799;
+}
+.van-picker__toolbar {
+  display: none;
 }
 </style>
