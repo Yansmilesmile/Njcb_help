@@ -190,12 +190,12 @@
           </div>
         </div>
 
-        <!-- 半办地点 -->
+        <!-- 举办地点 -->
         <van-field
           readonly
           clickable
           name="halfOfficeLocation"
-          label="半办地点"
+          label="举办地点"
           placeholder="请选择"
           :value="formData.halfOfficeLocation"
           @click="showLocationPopup = true"
@@ -251,11 +251,17 @@
               v-for="(item, index) in posterList"
               :key="index"
               class="poster-item"
-              @click="selectPoster(item)"
+              @click="selectPoster(item, index)"
             >
               <img :src="item.url" :alt="`poster-${index}`" />
+              <!-- 未选中状态的白色圆圈 -->
+              <div
+                v-if="formData.poster !== item.url + index"
+                class="unselected-circle"
+              ></div>
+              <!-- 选中状态的图标 -->
               <van-icon
-                v-if="formData.poster === item.url"
+                v-if="formData.poster === item.url + index"
                 name="checked"
                 class="check-icon"
               />
@@ -344,13 +350,13 @@ export default {
       locationOptions: ["500m", "1000m"],
       signInRangeOptions: ["500m", "1000m"],
       posterList: [
-        { url: "https://via.placeholder.com/100x140?text=poster1" },
-        { url: "https://via.placeholder.com/100x140?text=poster2" },
-        { url: "https://via.placeholder.com/100x140?text=poster3" },
-        { url: "https://via.placeholder.com/100x140?text=poster4" },
-        { url: "https://via.placeholder.com/100x140?text=poster5" },
-        { url: "https://via.placeholder.com/100x140?text=poster6" },
-        { url: "https://via.placeholder.com/100x140?text=poster7" },
+        { url: require("@/assets/logo.png") },
+        { url: require("@/assets/logo.png") },
+        { url: require("@/assets/logo.png") },
+        { url: require("@/assets/logo.png") },
+        { url: require("@/assets/logo.png") },
+        { url: require("@/assets/logo.png") },
+        { url: require("@/assets/logo.png") },
       ],
     };
   },
@@ -513,8 +519,14 @@ export default {
       this.formData.channelName = item.text;
       this.channelOptions = [];
     },
-    selectPoster(item) {
-      this.formData.poster = item.url;
+    selectPoster(item, index) {
+      const posterId = item.url + index;
+      // 如果已选中，则取消选中；否则选中
+      if (this.formData.poster === posterId) {
+        this.formData.poster = "";
+      } else {
+        this.formData.poster = posterId;
+      }
     },
     onSubmit() {
       // 提交表单
@@ -608,43 +620,94 @@ export default {
 
 .poster-section {
   padding: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
 
   .label {
     font-size: 14px;
     color: #333;
-    margin-bottom: 12px;
     font-weight: 500;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 }
 
 .poster-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -5px;
+  margin-right: -5px;
+  flex: 1;
 
   .poster-item {
     position: relative;
     border-radius: 4px;
     overflow: hidden;
+    box-sizing: border-box;
+    width: calc(25% - 10px);
+    margin: 0 5px 10px 5px;
+    padding-bottom: calc(25% - 10px);
 
     img {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: cover;
       display: block;
+    }
+
+    .unselected-circle {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 16px;
+      height: 16px;
+      background-color: #ffffff;
+      border-radius: 50%;
+      z-index: 1;
     }
 
     .check-icon {
       position: absolute;
-      top: 4px;
-      right: 4px;
-      width: 20px;
-      height: 20px;
-      background-color: #1989fa;
-      color: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      top: 2px;
+      right: 2px;
+      width: 16px;
+      height: 16px;
+      font-size: 16px;
+      color: #1989fa;
+      z-index: 1;
+      display: block;
+      line-height: 16px;
+      text-align: center;
+    }
+  }
+}
+
+/* 原生 CSS 备选方案：如果 flex 不支持时使用 */
+@supports not (display: flex) {
+  .poster-section {
+    .label {
+      display: inline-block;
+      vertical-align: top;
+      margin-right: 16px;
+    }
+
+    .poster-grid {
+      display: inline-block;
+      vertical-align: top;
+      width: calc(100% - 80px);
+      font-size: 0;
+      margin-left: -5px;
+      margin-right: -5px;
+    }
+
+    .poster-grid .poster-item {
+      display: inline-block;
+      vertical-align: top;
+      font-size: 14px;
     }
   }
 }
