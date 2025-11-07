@@ -383,7 +383,18 @@ export default {
         this.$toast("开始日期不能大于结束日期");
         return;
       }
-      this.dateRange = [this.startDate, this.endDate];
+      // 清除时间部分，只保留日期
+      const startDateOnly = new Date(
+        this.startDate.getFullYear(),
+        this.startDate.getMonth(),
+        this.startDate.getDate()
+      );
+      const endDateOnly = new Date(
+        this.endDate.getFullYear(),
+        this.endDate.getMonth(),
+        this.endDate.getDate()
+      );
+      this.dateRange = [startDateOnly, endDateOnly];
       this.showDatePicker = false;
       // 重置分页
       this.page = 1;
