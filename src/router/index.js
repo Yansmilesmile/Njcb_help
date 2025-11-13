@@ -25,6 +25,16 @@ const routes = [
     name: "add",
     component: () => import("../views/add.vue"),
   },
+  {
+    path: "/addClient",
+    name: "addClient",
+    component: () => import("../views/addClient.vue"),
+  },
+  {
+    path: "/detailClient",
+    name: "detailClient",
+    component: () => import("../views/detailClient.vue"),
+  },
 ];
 
 const router = new VueRouter({
