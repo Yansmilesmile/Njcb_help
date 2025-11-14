@@ -18,7 +18,7 @@
           <div class="title-left">
             <div class="theme-text">{{ activityDetail.busThem }}</div>
             <div class="tag-group">
-              <span class="tag tag-mode">{{
+              <span class="tag" :class="`tag-mode-${activityDetail.busMode}`">{{
                 getModeText(activityDetail.busMode)
               }}</span>
               <span class="tag tag-type">{{ activityDetail.busType }}</span>
@@ -88,7 +88,13 @@
           <span class="count">{{ assistantCount }}</span>
           <van-icon name="arrow" />
         </div>
-        <div class="action-btn" @click="goToCustomers">
+        <div
+          v-if="
+            !(activityDetail.busStatus === 2 && activityDetail.busMode === 2)
+          "
+          class="action-btn"
+          @click="goToCustomers"
+        >
           <span>参与客户</span>
           <span class="count">{{ customerCount }}</span>
           <van-icon name="arrow" />
@@ -110,7 +116,10 @@
       </div>
 
       <!-- 报名素材 -->
-      <div class="material-section">
+      <div
+        v-if="!(activityDetail.busStatus === 2 && activityDetail.busMode === 2)"
+        class="material-section"
+      >
         <div class="section-title">报名素材</div>
         <div class="material-text">{{ activityDetail.busApplySc }}</div>
       </div>
@@ -126,12 +135,21 @@
     </div>
 
     <!-- 底部按钮（固定定位） -->
-    <div class="bottom-actions">
-      <van-button plain class="btn-cancel" @click="showCancelDialog = true">
+    <div v-if="activityDetail.busStatus !== 5" class="bottom-actions">
+      <van-button
+        v-if="activityDetail.busStatus !== 3"
+        plain
+        class="btn-cancel"
+        @click="showCancelDialog = true"
+      >
         取消活动
       </van-button>
-      <van-button type="primary" class="btn-edit" @click="goToEdit">
-        编辑
+      <van-button
+        type="primary"
+        class="btn-edit"
+        @click="activityDetail.busStatus === 3 ? handleCheckIn() : goToEdit()"
+      >
+        {{ activityDetail.busStatus === 3 ? "打卡签到" : "编辑" }}
       </van-button>
     </div>
 
@@ -158,9 +176,9 @@ export default {
       customerCount: 0,
       activityDetail: {
         busThem: "理财产品分享会",
-        busMode: 1, // 1沙龙 2外拓团办
+        busMode: 2, // 1沙龙 2外拓团办
         busType: "理财",
-        busStatus: 2, // 2未开始 3进行中 4已结束 5已取消
+        busStatus: 3, // 2未开始 3进行中 4已结束 5已取消
         busCreatorName: "罗兆乐",
         busCreateTime: "2024-07-18 09:31",
         busStartTime: "2024-08-13 14:00",
@@ -255,6 +273,10 @@ export default {
           console.error("取消活动失败:", error);
         });
     },
+    handleCheckIn() {
+      // 打卡签到逻辑
+      this.$toast.success("打卡签到成功");
+    },
   },
 };
 </script>
@@ -264,7 +286,6 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: #f5f5f5;
 
   .detail-header {
     background: #fff;
@@ -303,13 +324,18 @@ export default {
             border-radius: 4px;
             white-space: nowrap;
 
-            &.tag-mode {
+            &.tag-mode-1 {
               background: #fff8ea;
               color: #ffcb4b;
               border-radius: 12px;
               margin-left: 8px;
             }
-
+            &.tag-mode-2 {
+              background: #ffeaeb;
+              color: #ff4529;
+              border-radius: 12px;
+              margin-left: 8px;
+            }
             &.tag-type {
               background: #ffffff;
               border: 1px solid #68b9ff;
